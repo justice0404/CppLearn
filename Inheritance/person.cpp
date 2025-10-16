@@ -35,6 +35,9 @@ public:
     person(/* args */);
     ~person();
 
+    static int cnt;
+    static void Getcnt(void);
+
     string _name;
     int _cover;
     void set_person_cover(int cover)
@@ -58,11 +61,13 @@ protected:
 person::person(/* args */)
 {
     cout << "person构造调用" << endl;
+    cnt++;
 }
 
 person::~person()
 {
     cout << "person析构调用" << endl;
+    cnt--;
 }
 
 class student1 : public person
@@ -101,11 +106,13 @@ public:
 student1::student1(/* args */)
 {
     cout << "student1构造调用" << endl;
+    cnt++;
 }
 
 student1::~student1()
 {
     cout << "student1析构调用" << endl;
+    cnt--;
 }
 
 void test01(void)
@@ -134,10 +141,28 @@ void test02(void)
     lisa.get_cover();
 }
 
+int person::cnt = 0;
+
+void person::Getcnt(void)
+{
+    cout << "当前对象个数为：" << cnt << endl;
+}
+
+void test03(void)
+{
+    student1 one;
+    one.Getcnt();
+    student1 two;
+    two.Getcnt();
+    person three;
+    three.Getcnt();
+}
+
 int main(int argc, char const *argv[])
 {
     //test01();
-    test02();
+    //test02();
+    test03();
     return 0;
 }
 
