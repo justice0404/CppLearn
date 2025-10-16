@@ -1,3 +1,11 @@
+/*  菱形继承问题
+*   a -> b -> d
+*     \> c />
+*   d同时继承自b和c，那么d就无法区分b和c中的a成员
+*   要么加上作用域
+*   要么使用虚继承
+*/
+
 #include <iostream>
 #include <string>
 using namespace  std;
@@ -18,7 +26,7 @@ person::~person()
 {
 }
 
-class student : public person
+class student : virtual public person
 {
 public:
     student(/* args */);
@@ -35,7 +43,7 @@ student::~student()
 {
 }
 
-class teacher : public person
+class teacher : virtual public person
 {
 public:
     teacher(/* args */);
@@ -75,9 +83,18 @@ void test01(void)
     cout << "course mornint 无法区分name这个成员继承自谁，需要加上作用域来声明" << endl;
 }
 
+void test02(void)
+{
+    course evening;
+    evening._name = "who";
+    cout << "虚继承解决菱形继承" << endl;
+    cout << evening._name << endl;
+}
+
 int main(int argc, char const *argv[])
 {
-    test01();
+    //test01();
+    test02();
     return 0;
 }
 
