@@ -34,7 +34,17 @@ private:
 public:
     person(/* args */);
     ~person();
+
     string _name;
+    int _cover;
+    void set_person_cover(int cover)
+    {
+        _cover = cover;
+    }
+    void get_cover(void)
+    {
+        cout << "Here are the person class number" << endl;
+    }
 
     void Print(void)
     {
@@ -42,14 +52,17 @@ public:
     }
 protected:
     int _heigh;
+
 };
 
 person::person(/* args */)
 {
+    cout << "person构造调用" << endl;
 }
 
 person::~person()
 {
+    cout << "person析构调用" << endl;
 }
 
 class student1 : public person
@@ -72,14 +85,27 @@ public:
         _heigh = heigh;
         _name = name;
     }
+
+    int _cover;
+    void set_student_cover(int cover)
+    {
+        _cover = cover;
+    }
+    int get_cover(void)
+    {
+        cout << "Here are the student class number" << endl;
+        return _cover;
+    }
 };
 
 student1::student1(/* args */)
 {
+    cout << "student1构造调用" << endl;
 }
 
 student1::~student1()
 {
+    cout << "student1析构调用" << endl;
 }
 
 void test01(void)
@@ -89,11 +115,29 @@ void test01(void)
     //印证了只能访问public成员，无法访问其他权限
     cout << "能访问的成员:" << tom._grade << "&" << tom._name << endl;
     tom.Print();
+
+    //切片原则，子类赋值给父类
+    person tom_father = tom;
+    cout << "切片原则的赋值" << endl;
+    tom_father.Print();
+}
+
+void test02(void)
+{
+    student1 lisa;
+    lisa.set(2024,9,163,"lisa");
+    //父类自己的get_cover
+    person lisa_father = lisa;
+    lisa_father.get_cover();
+    //lisa的get_cover只有一个，就是她自己的，已经覆盖了父类的
+    lisa.set_student_cover(16);
+    lisa.get_cover();
 }
 
 int main(int argc, char const *argv[])
 {
-    test01();
+    //test01();
+    test02();
     return 0;
 }
 
